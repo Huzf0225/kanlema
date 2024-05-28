@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+</head>
+<body>
+    <div style="height: 800px;width: 800px;"></div>
+    <script>
+        var sectors=[[sectors|safe]]
+        var adRate=[[adRate|safe]]
+        adRate= adRate.map(str => parseFloat(str));
+        var stocks=[[stocks|safe]]
+
+        var dataList=[]
+        for(var i=0;i<sectors.length;i++){
+            dataList[i]=[sectors[i],stocks[i],adRate[i]]
+        }
+        console.log(dataList);
+
+        var myCharts = echarts.init(document.querySelector('div'))
+        option = {
+            tooltip: {
+                faomatter:function(params){
+                    return '板块：'+params[1]+'\n领新股：'+params[0]+'\n涨跌幅：'+params[2];
+                }
+            },
+            // visualMap: {
+            //     max: 20,
+            //     inRange: {
+            //         color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+            //     }
+            // },
+            xAxis3D: {
+                type: 'category',
+                data: sectors,
+                axisLabel:{
+                    interval:0
+                }
+            },
+            yAxis3D: {
+                type: 'category',
+                data: stocks,
+                axisLabel:{
+                    interval:0
+                }
+            },
+            zAxis3D: {
+                type: 'value'
+            },
+            grid3D: {
+                boxHeight:60,
+                boxWidth: 80,
+                boxDepth: 80,
+                light: {
+                    main: {
+                        intensity: 1.2
+                    },
+                    ambient: {
+                        intensity: 0.3
+                    }
+                }
+            },
+            series: [{
+                type: 'bar3D',
+                data: dataList.map(function (item) {
+                    console.log([item[1], item[0], item[2]]);
+                    return {
+                        value: [item[0], item[1], item[2]]
+                    }
+                }),
+                shading: 'color',
+
+                label: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 14
+                    }
+                },
+                
+                itemStyle: {
+                    opacity: 0.4
+                },
+
+                emphasis: {
+                    label: {
+                        textStyle: {
+                            fontSize: 20,
+                            color: '#900'
+                        }
+                    },
+                    itemStyle: {
+                        color: '#900'
+                    }
+                }
+            }]
+        }
+        myCharts.setOption(option) 
+    </script>
+    
+</body>
+</html>

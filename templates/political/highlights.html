@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div style="height: 400px;width: 500px;"></div>
+    <script>
+        var titles=[[titles|safe]]
+        var lightUrl=[[lightUrl|safe]]
+        var childrenList=[]
+        for(var i=0;i<titles.length;i++){
+            var obj={
+                name:titles[i],
+                url:lightUrl[i]
+            };
+            childrenList.push(obj);
+        }
+        const dataList=[{
+            name:'要闻',
+            children:childrenList
+        }]
+        
+        let colorList=['#F7B971','#007E7F','#FAD8C8','#005B77']
+        var myCharts = echarts.init(document.querySelector('div'))
+        var option = {
+            backgroundColor: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#E1C089' // 开始颜色
+                }, {
+                    offset: 1, color: '#B13B2E' // 结束颜色
+                }],
+                global: false // 缺省为 false
+            },
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove',
+                formatter:function(params){
+                    return params.data.name
+                }
+            },
+            series:[
+                {
+                    type:'tree',
+                    initialTreeDepth: 1,
+                    data: dataList,
+                    top: '15%',
+                    left: '9%',
+                    bottom: '15%',
+                    right: '70%',
+                    symbolSize:7,
+                    itemStyle:{
+                        lineStyle:{
+                            curveness:1
+                        }
+                    },
+                    label:{
+                        position:'left',
+                        verticalAlign: 'middle',
+                        align: 'center',
+                        fontSize: 16,
+                        color:'#4A312C',
+                    },
+                    leaves: {
+                        label: {
+                            color:'#4A312C',
+                            overflow:'break',
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left',
+                            fontSize: 14,
+                            formatter:function(params){
+                                return params.data.name
+                            }
+                        },
+                        tooltip:{
+                            formatter:function(params){
+                                return params.data.name
+                            }
+                        },
+                        emphasis: {
+                            focus: 'descendant'
+                        },
+                        expandAndCollapse: false,
+                        animationDuration: 550,
+                        animationDurationUpdate: 750
+                    }
+                }
+            ]
+        }
+        myCharts.setOption(option)
+        myCharts.on('click',function(e){
+            window.open(e.data.url);
+        })
+    </script>
+</body>
+</html>

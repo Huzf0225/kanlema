@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+    <script src="static\echarts-wordcloud.min.js"></script>
+</head>
+<body>
+    <div class="techHotTopics" style="height: 300px;width: 400px;"></div>
+    <script>
+        var words=[[words|safe]]
+        var times=[[times|safe]]
+        times= times.map(str => parseFloat(str));
+        var color=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800','#ff5b00','#ff3000']
+
+        var dataList=[]
+        for(var i=0;i<words.length;i++){
+            var obj={
+                name:words[i],
+                value:times[i]
+            };
+            dataList.push(obj);
+        }
+        console.log(dataList);
+        function getRandomColor(color) {
+            var index = Math.floor(Math.random() * color.length);
+            return color[index];
+            }
+
+        var myCharts = echarts.init(document.querySelector('.techHotTopics'));
+        var option={
+            series: [{
+                type: 'wordCloud',
+                shape: 'circle',
+                keepAspect: false,
+               // maskImage: maskImage,
+                left: 'center',
+                top: 'center',
+                width: '100%',
+                height: '90%',
+                right: null,
+                bottom: null,
+                sizeRange: [12, 60],
+                rotationRange: [-90, 90],
+                rotationStep: 45,
+                gridSize: 8,
+                drawOutOfBound: false,
+                layoutAnimation: true,
+                textStyle: {
+                    fontFamily: 'sans-serif',
+                    fontWeight: 'bold',
+                    color:function () {
+                        return getRandomColor(color)
+                    }
+                    // color: function () {
+                    //     return 'rgb(' + [
+                    //         Math.round(Math.random() * 160),
+                    //         Math.round(Math.random() * 160),
+                    //         Math.round(Math.random() * 160)
+                    //     ].join(',') + ')';
+                    // }
+                },
+                emphasis: {
+                    // focus: 'self',
+                    textStyle: {
+                        textShadowBlur: 3,
+                        textShadowColor: '#333'
+                    }
+                },
+                data: dataList
+            }]
+
+        }
+        myCharts.setOption(option)
+    </script>
+</body>
+</html>

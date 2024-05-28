@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div class="infloat" style="height: 300px;width: 400px;"></div>
+    <script>
+        var infsectors=[[infsectors|safe]]
+        var IFRate=[[IFRate|safe]]
+        IFRate= IFRate.map(str => parseFloat(str));
+        var IFAmount=[[IFAmount|safe]];
+        console.log(IFRate);
+
+        var dataList=[]
+        for(var i=0;i<5;i++){
+            var obj={
+                name:infsectors[i]
+            }
+            dataList.push(obj)
+        }
+        for(var i=0;i<5;i++){
+            var obj={
+                name:IFRate[i].toString()
+            }
+            dataList.push(obj)
+        }
+        for(var i=0;i<5;i++){
+            var obj={
+                name:IFAmount[i]
+            }
+            dataList.push(obj)
+        }
+
+        console.log(dataList);
+
+        var linksList=[]
+        for(var i=0;i<5;i++){
+            var obj={
+                source:infsectors[i],
+                target:IFRate[i].toString(),
+                value:IFRate[i],
+            }
+            linksList.push(obj)
+        }
+        for(var i=0;i<5;i++){
+            var obj={
+                source:IFRate[i].toString(),
+                target:IFAmount[i],
+                value:parseInt(IFAmount[i]),
+            }
+            linksList.push(obj)
+        }
+        console.log(linksList);
+
+        var myCharts=echarts.init(document.querySelector('.infloat'))
+        var option={
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            dataZoom: [
+            {
+                type: "inside"
+            }
+            ],
+            series: [
+                {
+                type: 'sankey',
+                nodeAlign: 'left',
+                data:dataList,
+                links: linksList,
+                emphasis: {
+                    focus: 'adjacency'
+                },
+                levels: [
+                    {
+                    depth: 0,
+                    itemStyle: {
+                        color: '#fbb4ae'
+                    },
+                    lineStyle: {
+                        color: 'source',
+                        opacity: 0.6
+                    }
+                    },
+                    {
+                    depth: 1,
+                    itemStyle: {
+                        color: '#b3cde3'
+                    },
+                    lineStyle: {
+                        color: 'source',
+                        opacity: 0.6
+                    }
+                    },
+                    {
+                    depth: 2,
+                    itemStyle: {
+                        color: '#ccebc5'
+                    },
+                    lineStyle: {
+                        color: 'source',
+                        opacity: 0.6
+                    }
+                    }
+                ],
+                lineStyle: {
+                    curveness: 0.5
+                }
+                }]
+        }
+        myCharts.setOption(option)
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+    <div class="TechSankey"style="height: 250px;width: 900px;"></div>
+    <script>
+        var TStitles=[[TStitles|safe]]
+        var TStime=[[TStime|safe]]
+        let linkList=[]
+        for(var i=0;i<5;i++){
+            var obj={
+                source:'20',
+                target:String(i),
+                value:20
+            }
+            linkList.push(obj)
+        }
+        for(var i=5;i<10;i++){
+            var obj={
+                source:'21',
+                target:String(i),
+                value:20
+            }
+            linkList.push(obj)
+        }
+        for(var i=10;i<15;i++){
+            var obj={
+                source:'22',
+                target:String(i),
+                value:20
+            }
+            linkList.push(obj)
+        }
+        for(var i=15;i<20;i++){
+            var obj={
+                source:'23',
+                target:String(i),
+                value:20
+            }
+            linkList.push(obj)
+        }
+        console.log(linkList);
+        var dataList=[]
+        for(var i=0;i<20;i++){
+            dataList.push(TStitles[i])
+        }
+        dataList.push('iPhone','iPad','Apple Watch','Mac')
+        console.log(dataList.length);
+        var data=[]
+        for(var i=0;i<20;i++){
+            var obj={
+                id:String(i),
+                name:dataList[i],
+                depth:1
+            };
+            data.push(obj);
+        }
+        for(var i=20;i<24;i++){
+            var obj={
+                id:String(i),
+                name:dataList[i],
+                depth:0
+            };
+            data.push(obj);
+        }
+        console.log(data);
+
+        var myCharts = echarts.init(document.querySelector('.TechSankey'))
+        var option={
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove',
+                
+            },
+            series: [
+                {
+                    type: 'sankey',
+                    nodeAlign: 'left',
+                    right:400,
+                    data:data,
+                    links: linkList,
+                    // width:"70%",
+                    // height:'80%',
+                    labellayout:{
+                        width:60,
+                    },
+                    emphasis: {
+                        focus: 'adjacency'
+                    },
+                    label:{
+                        formatter:'{b}',
+                        color:'#ff5b00'
+                    },
+                    tooltip:{
+                        formatter:'{b}'
+                    },
+                    levels: [
+                        {
+                            depth: 0,
+                            itemStyle: {
+                                color:{
+                                    type:'linear',
+                                    x: 0,
+                                    y: 0,
+                                    x2: 0,
+                                    y2: 1,
+                                    colorStops: [{
+                                        offset: 0, color: '#00cfff' // 开始颜色
+                                    }, {
+                                        offset: 1, color: '#ffe000' // 结束颜色
+                                    }],
+                                    global: false
+                                }
+                            },
+                            lineStyle: {
+                                color: 'source',
+                                opacity: 0.6
+                            }
+                        },
+                        {
+                            depth: 1,
+                            itemStyle: {
+                                color:{
+                                    type:'linear',
+                                    x: 0,
+                                    y: 0,
+                                    x2: 0,
+                                    y2: 1,
+                                    colorStops: [{
+                                        offset: 0, color: '#00cfff' // 开始颜色
+                                    }, {
+                                        offset: 1, color: '#ffe000' // 结束颜色
+                                    }],
+                                    global: false
+                                }
+                            },
+                            lineStyle: {
+                                color: 'source',
+                                opacity: 0.6,
+
+                            }
+                        }
+                    ]
+                }],
+                lineStyle: {
+                    curveness: 0.5
+                }
+        }
+        myCharts.setOption(option)
+    </script>
+    
+</body>
+</html>

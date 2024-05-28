@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div class="carsStockMarket"style="height: 400px;width: 600px;"></div>
+    <script>
+        var companies=[[companies|safe]]
+        var lowestPrice=[[lowestPrice|safe]]
+        lowestPrice=lowestPrice.map(str => parseFloat(str))
+        var caradRate=[[caradRate|safe]]
+        caradRate=caradRate.map(str => parseFloat(str))
+
+        var c1xAxis=companies.slice(0,10)
+        var c2xAxis=companies.slice(10,20)
+        var c3xAxis=companies.slice(20,30)
+        var yAxis=['A股','港股','美股']
+        var c1Data=[]
+        for(var i=0;i<10;i++){
+            c1Data.push([i,caradRate[i]]);
+        }
+        var c2Data=[]
+        for(var i=10;i<20;i++){
+            c2Data.push([i-10,caradRate[i]]);
+        }
+        var c3Data=[]
+        for(var i=20;i<30;i++){
+            c3Data.push([i-20,caradRate[i]]);
+        }
+        var myCharts=echarts.init(document.querySelector('.carsStockMarket'))
+        var option={
+            tooltip: {
+                position: 'top'
+            },
+            title:[
+                {
+                    text:yAxis[0],
+                    textBaseline: 'middle',
+                    top: ((1 + 0.5) * 100) / 7 + '%',
+                },
+                {
+                    text:yAxis[1],
+                    textBaseline: 'middle',
+                    top: ((2 +0.5) * 100) / 7 + '%',
+                },
+                {
+                    text:yAxis[2],
+                    textBaseline: 'middle',
+                    top: ((3 +0.5) * 100) / 7 + '%',
+                }
+            ],
+            singleAxis:[
+                {
+                    left:80,
+                    type:'category',
+                    boundaryGap:false,
+                    data:c1xAxis,
+                    top: (1 * 100) / 7 + 5 + '%',
+                    height: 100 / 7 - 10 + '%',
+                    nameRotate:15,
+                    axisLabel: {
+                        rotate:20
+                    }
+                },{
+                    left:80,
+                    type:'category',
+                    boundaryGap:false,
+                    data:c2xAxis,
+                    top: (2 * 100) / 7 + 5 + '%',
+                        height: 100 / 7 - 10 + '%',
+                        axisLabel: {
+                        rotate:20
+                    }
+                },{
+                    left:80,
+                    type:'category',
+                    boundaryGap:false,
+                    data:c3xAxis,
+                    top: (3 * 100) / 7 + 5 + '%',
+                        height: 100 / 7 - 10 + '%',
+                        axisLabel: {
+                        rotate:20
+                    }
+                }
+                
+            ],
+            series:[
+                {
+                    singleAxisIndex:0,
+                    coordinateSystem: 'singleAxis',
+                    type: 'scatter',
+                    data: c1Data,
+                    symbolSize:function(params){ //大小：涨跌幅
+                        return Math.abs(params[1])*5;
+                    },
+                    itemStyle:{
+                        color:function(params){ //颜色（红、绿）
+                        if(params.value[1]<0)
+                            return 'rgb(52,218,98)';
+                        else if(params.value[1]>0)
+                            return 'rgb(235,33,0)';
+                    }
+                    },
+                    
+                },{
+                    singleAxisIndex:1,
+                    coordinateSystem: 'singleAxis',
+                    type: 'scatter',
+                    data: c2Data,
+                    symbolSize:function(params){ //大小：涨跌幅
+                        return Math.abs(params[1])*5;
+                    },
+                    itemStyle:{
+                        color:function(params){ //颜色（红、绿）
+                        if(params.value[1]<0)
+                            return 'rgb(52,218,98)';
+                        else if(params.value[1]>0)
+                            return 'rgb(235,54,0)';
+                    }
+                    },
+                },{
+                    singleAxisIndex:2,
+                    coordinateSystem: 'singleAxis',
+                    type: 'scatter',
+                    data: c3Data,
+                    symbolSize:function(params){ //大小：涨跌幅
+                        return Math.abs(params[1])*5;
+                    },
+                    itemStyle:{
+                        color:function(params){ //颜色（红、绿）
+                        if(params.value[1]<0)
+                            return 'rgb(52,218,98)';
+                        else if(params.value[1]>0)
+                            return 'rgb(241,133,133)';
+                    }
+                    },
+                }
+            ]
+        }
+        myCharts.setOption(option)
+    </script>
+</body>
+</html>

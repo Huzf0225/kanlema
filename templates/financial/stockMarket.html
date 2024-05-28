@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div class="stockMarket"style="height: 400px;width: 600px;"></div>
+    <script>
+        var stonames=[[stonames|safe]]
+        var stoprice=[[stoprice|safe]]
+        stoprice= stoprice.map(str => parseFloat(str));
+        var stoadAmount=[[stoadAmount|safe]]
+        stoadAmount= stoadAmount.map(str => parseFloat(str));
+        var stoadRate=[[stoadRate|safe]]
+        stoadRate= stoadRate.map(str => parseFloat(str));
+        var stotime=[[stotime|safe]]
+        console.log(stonames); 
+        console.log(stoadRate)
+        const max = Math.max(...stoadRate);
+    
+        var option={
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                },
+            },
+            grid: {
+                top: '20%',
+                left: '15%',
+                right: '10%',
+                bottom: '15%',
+                containLabel: true
+	    },
+            toolbox: {
+                feature: {
+                dataView: { show: true, readOnly: false },
+                restore: { show: true },
+                saveAsImage: { show: true }
+                }
+            },
+            xAxis: [
+                {
+                type: 'category',
+                axisLine: {
+                        show: false
+                    },
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLabel:{
+                    interval:0,
+                    rotate:20
+                },
+                data: [stonames[0],stonames[1],stonames[2],stonames[3],stonames[4],stonames[5]]
+                }
+            ],
+            yAxis: [
+                {
+                    show:true,
+                    type: 'value',
+                    name: '最新价',
+                    position: 'left',
+                    alignTicks: true,
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show:true,
+                        formatter:'{value}'
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '涨跌幅',
+                    position: 'right',
+                    alignTicks: true,
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show:true,
+                        formatter: '{value} %'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: 'stoprice',
+                    type: 'line',
+                    data:[stoprice[0],stoprice[1],stoprice[2],stoprice[3],stoprice[4],stoprice[5]]
+                },
+                {
+                    name: 'stoadRate',
+                    type: 'bar',
+                    barCategoryGap:0,
+                    barWidth:'37% ',
+                    yAxisIndex:1,
+                    data:[stoadRate[0],stoadRate[1],stoadRate[2],stoadRate[3],stoadRate[4],stoadRate[5]]    
+                }
+            ]
+        };
+
+        var Europe=[stonames[0],stonames[1],stonames[2],stonames[3],stonames[4],stonames[5]]
+        var dataEurope1=[stoprice[0],stoprice[1],stoprice[2],stoprice[3],stoprice[4],stoprice[5]]
+        var dataEurope2=[stoadRate[0],stoadRate[1],stoadRate[2],stoadRate[3],stoadRate[4],stoadRate[5]]
+        var Americas=[stonames[6],stonames[7],stonames[8],stonames[9],stonames[10],stonames[11]]
+        var dataAmericas1=[stoprice[6],stoprice[7],stoprice[8],stoprice[9],stoprice[10],stoprice[11]]
+        var dataAmericas2=[stoadRate[6],stoadRate[7],stoadRate[8],stoadRate[9],stoadRate[10],stoadRate[11]]
+        var Asia=[stonames[12],stonames[13],stonames[14],stonames[15],stonames[16],stonames[17]]
+        var dataAsia1=[stoprice[12],stoprice[13],stoprice[14],stoprice[15],stoprice[16],stoprice[17]]
+        var dataAsia2=[stoadRate[12],stoadRate[13],stoadRate[14],stoadRate[15],stoadRate[16],stoadRate[17]]
+        var Australia= [stonames[18],stonames[19]]
+        var dataAustralia1= [stoprice[18],stoprice[19]]
+        var dataAustralia2=[stoadRate[18],stoadRate[19]] 
+        var Africa= [stonames[20],stonames[21]]
+        var dataAfrica1= [stoprice[0],stoprice[1],stoprice[2],stoprice[3],stoprice[4],stoprice[5]]
+        var dataAfrica2= [stoadRate[0],stoadRate[1],stoadRate[2],stoadRate[3],stoadRate[4],stoadRate[5]]
+
+
+        var chartData = [
+            { name:Europe,data1:dataEurope1,data2:dataEurope2 },  
+            { name:Americas,data1:dataAmericas1, data2:dataAmericas2 }, 
+            { name:Asia,data1:dataAsia1, data2:dataAsia2 }, 
+            { name:Australia,data1:dataAustralia1, data2:dataAustralia2 },
+            { name:Africa,data1:dataAfrica1, data2:dataAfrica2 }
+        ];
+        var currentIndex = 0; 
+
+        var myCharts = echarts.init(document.querySelector('.stockMarket'))
+        myCharts.setOption(option)
+        function carouselCharts() {
+            myCharts.setOption({
+                xAxis:{
+                    data: chartData[currentIndex].name
+                },
+                series: [
+                {
+                    data: chartData[currentIndex].data1
+                },{
+                    data: chartData[currentIndex].data2
+                }
+                ]
+            });
+            currentIndex = (currentIndex + 1) % chartData.length;
+        }
+        setInterval(carouselCharts, 5000);
+    </script>
+</body>
+</html>

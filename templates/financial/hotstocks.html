@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div class="hotstocks" style="height: 300px;width: 400px;"></div>
+    <script>
+        var glastocks=[[glastocks|safe]]
+        var glaglaprice=[[glaglaprice|safe]]
+        glaglaprice= glaprice.map(str => parseFloat(str));
+        var glaadRate=[[glaadRate|safe]]
+        glaadRate= glaadRate.map(str => parseFloat(str));
+        console.log(glastocks);
+        
+        var myCharts = echarts.init(document.querySelector('.hotstocks'))
+        var option={
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series: [
+            {
+                type: 'graph',
+                layout: 'circular',
+                data:[
+                    {
+                        name:glaadRate[0] ,
+                        value:glaprice[0],
+                        symbolSize: [70, 70]
+                    }, {
+                        name: glaadRate[1],
+                        value:glaprice[1],
+                        draggable: true,
+                        symbolSize: [60, 60]
+                    }, {
+                        name: glaadRate[2],
+                        value:glaprice[2],
+                        draggable: true,
+                        symbolSize: [55, 55]
+                    }, {
+                        name: glaadRate[3],
+                        value:glaprice[3],
+                        draggable: true,
+                        symbolSize: [50, 50]
+                    }, {
+                        name: glaadRate[4],
+                        value:glaprice[4],
+                        draggable: true,
+                        symbolSize: [45, 45]
+                    },{
+                        name: glaadRate[5],
+                        value:glaprice[5],
+                        draggable: true,
+                        symbolSize: [40, 40]
+                    },{
+                        name: glaadRate[6],
+                        value:glaprice[6],
+                        draggable: true,
+                        symbolSize: [35, 35]
+                    },{
+                        name: glaadRate[7],
+                        value:glaprice[7],
+                        draggable: true,
+                        symbolSize: [30, 30]
+                    },{
+                        name: glaadRate[8],
+                        value:glaprice[8],
+                        draggable: true,
+                        symbolSize: [25, 25]
+                    },{
+                        name: glaadRate[9],
+                        value:glaprice[9],
+                        draggable: true,
+                        symbolSize: [20, 20]
+                    }
+                ],
+                itemStyle:{
+                    color:function(params){
+                        if(params.name>0)
+                            return 'red';
+                        else if(params.name<0)
+                            return 'green';
+                        else
+                            return 'yellow';
+                    }
+                },
+                roam: true,
+                label: {
+                    show:true,
+                    position: 'inside',
+                    formatter: function(params){
+                        return glastocks[params.dataIndex];
+                    }
+                },
+                emphasis: {
+                    focus: 'self'
+                }
+            }],
+            tooltip:{
+                show:true,
+                formatter:function(params){
+                    return glastocks[params.dataIndex]+'<br>价格： '+params.value+'<br>涨跌幅： '+params.name;
+                },
+            }
+        }
+        myCharts.setOption(option)
+    </script>
+</body>
+</html>

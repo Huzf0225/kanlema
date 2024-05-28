@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div class="ITComments"style="height: 300px;width: 600px;"></div>
+    <script>
+        var Ititles=[[Ititles|safe]]
+        console.log(Ititles);
+        var dataList=[]
+        for(var i=0;i<Ititles.length;i++){
+            var obj={
+                name:Ititles
+            };
+            dataList.push(obj)
+        }
+        var color=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800','#ff5b00','#ff3000']
+        var myCharts = echarts.init(document.querySelector('.ITComments'));
+        var option={
+          backgroundColor: '#0A2E5D',
+          color:color,
+          title: {
+            text: 'Funnel'
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: function(params){
+              return params.name
+            }
+          },
+          toolbox: {
+            feature: {
+              dataView: { readOnly: false },
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+          legend: {
+            data: ['1', '2', '3', '4', '5']
+          },
+          series: [
+            {
+              name: '评论排行榜',
+              type: 'funnel',
+              left: '10',
+              right: '80',
+              width: '40%',
+              label: {
+                formatter: function(params){
+                  return params.name
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              itemStyle: {
+                opacity: 0.7
+              },
+              emphasis: {
+                label: {
+                  position: 'inside',
+                  formatter: function(params){
+                    return params.name
+                  }
+                }
+              },
+              data: [
+                { value: 30, name: Ititles[0] },
+                { value: 10, name: Ititles[1] },
+                { value: 5, name: Ititles[2] },
+                { value: 50, name: Ititles[3] },
+                { value: 80, name: Ititles[4] }
+              ],
+            },
+            {
+              name: 'Actual',
+              type: 'funnel',
+              left: '10',
+              right: '80',
+              width: '40%',
+              maxSize: '80%',
+              label: {
+                position: 'inside',
+                formatter: '{c}%',
+                color: '#fff'
+              },
+              itemStyle: {
+                opacity: 0.5,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              emphasis: {
+                label: {
+                  position: 'inside',
+                  formatter: function(params){
+                    return params.name
+                  }
+                }
+              },
+              data:[
+                { value: 30, name: Ititles[0] },
+                { value: 10, name: Ititles[1] },
+                { value: 5, name: Ititles[2] },
+                { value: 50, name: Ititles[3] },
+                { value: 80, name: Ititles[4] }
+              ],
+              // Ensure outer shape will not be over inner shape when hover.
+              z: 100
+            }
+          ]
+        }
+        myCharts.setOption(option)
+    </script>
+</body>
+</html>

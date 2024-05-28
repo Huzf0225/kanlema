@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div style="height: 400px;width: 800px;"></div>
+    <script>
+        var sectors=[[sectors|safe]]
+        var adRate=[[adRate|safe]]
+        adRate= adRate.map(str => parseFloat(str));
+        var stocks=[[stocks|safe]]   
+
+        var max=adRate[0]
+        for(var i=0;i<3;i++){
+            if(adRate[i]>max)
+                max=adRate[i]
+        }
+
+        var myCharts=echarts.init(document.querySelector('div'))
+        var option={
+                tooltip:{
+                    trigger:'item'
+                },
+                series: [
+                {
+                    type: 'gauge',
+                    startAngle: 210,
+                    endAngle: -30,
+                    min: 0,
+                    max: max,
+                    radius:'35%',
+                    center:['21%','55%'],
+                    splitNumber: 5,
+                    universalTransition: {
+                        enabled: true,
+                        delay: function (idx, total) {
+                            return (idx / total) * 1000;
+                        }
+                    },
+                    itemStyle: {
+                        color: '#FFAB91'
+                    },
+                    progress: {
+                        show: true,
+                        width: 30
+                    },
+                    pointer: {
+                        show: false
+                    },
+                    axisLine: {
+                        roundCap:true,
+                        lineStyle: {
+                            width: 30,
+                            shadowBlur: 20
+                        }
+                    },
+                    axisTick: {
+                            distance: -45,
+                            splitNumber: 5,
+                            lineStyle: {
+                                width: 2,
+                                color: '#999'
+                        }
+                    },
+                    splitLine: {
+                            distance: -52,
+                            length: 9,
+                            lineStyle: {
+                            width: 3,
+                            color: '#999',
+                            formatter:"{value}"
+                        }
+                    },
+                    axisLabel: {
+                        distance: -20,
+                        color: '#999',
+                        fontSize: 16
+                    },
+                    anchor: {
+                        show: false
+                    },
+                    title: {
+                        show: false
+                    },
+                    detail: {
+                        valueAnimation: true,
+                        width: '60%',
+                        lineHeight: 40,
+                        borderRadius: 8,
+                        offsetCenter: [0, '3%'],
+                        fontSize: 18,
+                        fontWeight: 'bolder',
+                        formatter: '{value} %',
+                        color: 'inherit'
+                    },
+                    tooltip:{
+                        formatter:function(){
+                            return stocks[1]
+                        }
+                    },
+                    data: [
+                        {
+                            value:adRate[1],
+                            name:sectors[1]
+                        }
+                    ]
+                },
+                {
+                    type: 'gauge',
+                    startAngle: 210,
+                    endAngle: -30,
+                    min: 0,
+                    max: max,
+                    radius:'35%',
+                    center:['79%','55%'],
+                    splitNumber: 5,
+                    universalTransition: {
+                        enabled: true,
+                        delay: function (idx, total) {
+                            return (idx / total) * 1000;
+                        }
+                    },
+                    itemStyle: {
+                        color: '#FFAB91'
+                    },
+                    progress: {
+                        show: true,
+                        width: 30
+                    },
+                    pointer: {
+                        show: false
+                    },
+                    axisLine: {
+                        roundCap:true,
+                        lineStyle: {
+                            width: 30,
+                            shadowBlur: 20
+                        }
+                    },
+                    axisTick: {
+                            distance: -45,
+                            splitNumber: 5,
+                            lineStyle: {
+                                width: 2,
+                                color: '#999'
+                        }
+                    },
+                    splitLine: {
+                            distance: -52,
+                            length: 9,
+                            lineStyle: {
+                            width: 3,
+                            color: '#999',
+                            formatter:"{value}"
+                        }
+                    },
+                    axisLabel: {
+                        distance: -20,
+                        color: '#999',
+                        fontSize: 16
+                    },
+                    anchor: {
+                        show: false
+                    },
+                    title: {
+                        show: false
+                    },
+                    detail: {
+                        valueAnimation: true,
+                        width: '60%',
+                        lineHeight: 40,
+                        borderRadius: 8,
+                        offsetCenter: [0, '3%'],
+                        fontSize: 18,
+                        fontWeight: 'bolder',
+                        formatter: '{value} %',
+                        color: 'inherit'
+                    },
+                    tooltip:{
+                        formatter:function(){
+                            return stocks[2]
+                        }
+                    },
+                    data: [
+                        {
+                            value:adRate[2],
+                            name:sectors[2]
+                        }
+                    ]
+                },{
+                    type: 'gauge',
+                    startAngle: 210,
+                    endAngle: -30,
+                    min: 0,
+                    max: max,
+                    radius:'50%',
+                    center:['50%','50%'],
+                    splitNumber: 5,
+                    universalTransition: {
+                        enabled: true,
+                        delay: function (idx, total) {
+                            return (idx / total) * 1000;
+                        }
+                    },
+                    itemStyle: {
+                        color: '#FFAB91'
+                    },
+                    progress: {
+                        show: true,
+                        width: 30
+                    },
+                    pointer: {
+                        show: false
+                    },
+                    axisLine: {
+                        roundCap:true,
+                        lineStyle: {
+                            width: 30,
+                            shadowBlur: 20
+                        }
+                    },
+                    axisTick: {
+                            distance: -45,
+                            splitNumber: 5,
+                            lineStyle: {
+                                width: 2,
+                                color: '#999'
+                        }
+                    },
+                    splitLine: {
+                            distance: -52,
+                            length: 9,
+                            lineStyle: {
+                            width: 3,
+                            color: '#999',
+                            formatter:"{value}"
+                        }
+                    },
+                    axisLabel: {
+                        distance: -20,
+                        color: '#999',
+                        fontSize: 16
+                    },
+                    anchor: {
+                        show: false
+                    },
+                    title: {
+                        show: false
+                    },
+                    detail: {
+                        valueAnimation: true,
+                        width: '60%',
+                        lineHeight: 40,
+                        borderRadius: 8,
+                        offsetCenter: [0, '3%'],
+                        fontSize: 40,
+                        fontWeight: 'bolder',
+                        formatter: '{value} %',
+                        color: 'inherit'
+                    },
+                    tooltip:{
+                        formatter:function(){
+                            return stocks[0]
+                        }
+                    },
+                    data: [
+                        {
+                            value:adRate[0],
+                            name:sectors[0]
+                        }
+                    ]
+                },
+            ]
+            }
+            myCharts.setOption(option)
+    </script>
+</body>
+</html>

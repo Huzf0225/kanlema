@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title><script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div class="stockMarketOverview"style="height: 300px;width: 400px;"></div>
+    <script>
+        overnames=[[overnames|safe]]
+        overrise=[[overrise|safe]]
+        overrise=overrise.map(str => parseFloat(str))
+        overflat=[[overflat|safe]]
+        overflat=overflat.map(str => parseFloat(str))
+        overfell=[[overfell|safe]]
+        overfell=overfell.map(str => parseFloat(str))
+
+        var myCharts=echarts.init(document.querySelector('.stockMarketOverview'))
+        var option={
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                type: 'shadow'
+                }
+            },
+            legend: {
+                top:'10%',
+                data: ['上涨','持平','下跌']
+            },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+            },
+            xAxis: {
+                type:'value',
+                axisLine: { show: false },
+                axisLabel: { show: false },
+                axisTick: { show: false },
+                splitLine: { show: false },
+            },
+            yAxis: {
+                type: 'category',
+                data: overnames,
+                inverse:true
+            },
+            series: [
+                {
+                name: '上涨',
+                type: 'bar',
+                barWidth:35,
+                stack: 'total',
+                label: {
+                    show: true
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: overrise
+                },
+                {
+                name: '持平',
+                type: 'bar',
+                stack: 'total',
+                label: {
+                    show: true
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: overflat
+                },
+                {
+                name: '下跌',
+                type: 'bar',
+                stack: 'total',
+                label: {
+                    show: true
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: overfell
+                }
+            ]
+        }
+        myCharts.setOption(option)
+    </script>
+</body>
+</html>

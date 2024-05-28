@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta itname="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div class="ITAd" style="height: 300px;width: 600px;"></div>
+    <script>
+        var itnameList=[]
+        var itname1="[[itname[0]|safe]]"
+        itnameList.push(itname1)
+        var itname2="[[itname[1]|safe]]"
+        itnameList.push(itname2)
+        var itname3="[[itname[2]|safe]]"
+        itnameList.push(itname3)
+        var itname4="[[itname[3]|safe]]"
+        itnameList.push(itname4)
+        var itname5="[[itname[4]|safe]]"
+        itnameList.push(itname5)
+        var itname6="[[itname[5]|safe]]"
+        itnameList.push(itname6)
+        var itname7="[[itname[6]|safe]]"
+        itnameList.push(itname7)
+        var itname8="[[itname[7]|safe]]"
+        itnameList.push(itname8)
+        var itname9="[[itname[8]|safe]]"
+        itnameList.push(itname9)
+        var itname10="[[itname[9]|safe]]"
+        itnameList.push(itname10)
+        var itname11="[[itname[10]|safe]]"
+        itnameList.push(itname11)
+        var itprice=[[itprice|safe]]
+        itprice= itprice.map(str => parseFloat(str))
+        var itadRate=[[itadRate|safe]]
+        itadRate= itadRate.map(str => parseFloat(str))
+        max=Math.max(...itprice)
+        var maxList=[]
+        for(var i=0;i<11;i++){
+            maxList.push(max)
+        }
+        var dataList=[]
+        for(var i=0;i<11;i++){
+            var obj={
+                itname: itadRate[i],
+                value: itprice[i]
+            }
+            dataList.push(obj)
+        }
+
+        var option = {
+            backgroundColor: '#031245',
+            color: [
+                '#63caff','#49beff','#03387a','#03387a','#03387a',
+                '#6c93ee','#a9abff','#f7a23f','#27bae7','#ff6d9d',
+                '#cb79ff','#f95b5a','#ccaf27','#38b99c','#93d0ff',
+                '#bd74e0','#fd77da','#dea700',
+            ],
+            title:{
+                text:"IT业界国际上市公司行情",
+                top:"5%",
+                left:"center",
+                textStyle:
+                    {  
+                        color:'rgb(255,255,255,1)',
+                        fontSize:16
+                }
+            },
+            xAxis: {
+                axisLabel: {
+                    color: '#c0c3cd',
+                    fontSize: 14,
+                    interval: 0,
+                    rotate:20
+                },
+                axisTick: { show: false },
+                splitLine: { show: false },
+                axisLine: { show: false },
+                data: itnameList,
+                type: 'category',
+            },
+            yAxis: {
+                axisLabel: { show:false },
+                axisTick: { show: false },
+                splitLine: { show: false },
+                axisLine: { show: false },
+                itname: '',
+            },
+            series: [
+                {
+                    data: dataList,
+                    type: 'bar',
+                    barMaxWidth: 'auto',
+                    barWidth: 30,
+                    itemStyle: {
+                        color: {
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            type: 'linear',
+                            global: false,
+                            colorStops: [
+                                {
+                                    offset: 0,
+                                    color: '#0b9eff',
+                                },
+                                {
+                                    offset: 1,
+                                    color: '#63caff',
+                                },
+                            ],
+                        },
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        distance: 10,
+                        color: '#fff',
+                    },
+                },
+                {
+                    data: itprice,
+                    type: 'pictorialBar',
+                    barMaxWidth: '20',
+                    symbolPosition: 'end',
+                    symbol: 'diamond',
+                    symbolOffset: [0, '-50%'],
+                    symbolSize: [30, 12],
+                    zlevel: 2,
+                },//value值位菱形图
+                {
+                    data: maxList,
+                    type: 'bar',
+                    itemStyle:{
+                        color:'rgba(0, 128, 255, 0.3)'
+                    },
+                    barMaxWidth: 'auto',
+                    barWidth: 30,
+                    barGap: '-100%',
+                    zlevel: -1,
+                },//最大值bar图
+                {
+                    data: maxList,
+                    type: 'pictorialBar',
+                    itemStyle:{
+                        color:'rgba(0, 128, 255, 0.3)'
+                    },
+                    barMaxWidth: '20',
+                    symbolPosition: 'end',
+                    symbol: 'diamond',
+                    symbolOffset: [0, '-50%'],
+                    symbolSize: [30, 12],
+                    zlevel: -1,
+                },//最大值四棱柱菱形图
+            ],
+            tooltip: {
+                trigger: 'axis',
+                formatter:function(params){
+                    console.log(params[0].data);
+                    return "价格    ："+ params[0].data.value+"<br>涨跌幅  : "+params[0].data.itname;
+                }
+            },
+        };
+
+
+        var myCharts = echarts.init(document.querySelector('.ITAd'));
+        // var option={
+        //     tooltip: {
+        //         trigger: 'axis',
+        //         axisPointer: {
+        //             type: 'cross'
+        //         },
+        //     },
+        //     grid: {
+        //         right: '20%'
+        //     },
+        //     toolbox: {
+        //         feature: {
+        //         dataView: { show: true, readOnly: false },
+        //         restore: { show: true },
+        //         saveAsImage: { show: true }
+        //         }
+        //     },
+        //     xAxis: {
+        //         type: 'value',
+        //         position: 'top',
+        //         splitLine: {
+        //         lineStyle: {
+        //             type: 'dashed'
+        //         }
+        //         }
+        //     },
+        //     yAxis: [
+        //         {
+        //             type: 'category',
+        //             itname: '涨跌幅',
+        //             position: 'right',
+        //             inverse:true,
+        //             alignTicks: true,
+        //             axisLine: { show: false },
+        //             axisLabel: { show: false },
+        //             axisTick: { show: false },
+        //             splitLine: { show: false },
+        //             data: itnameList
+        //         }
+        //     ],
+        //     series: [
+        //         {
+        //             itname: 'itadRate',
+        //             type: 'bar',
+        //             stack: 'Total',
+        //             data: itadRate  
+        //         }
+        //     ]
+        // };
+        myCharts.setOption(option)
+    </script>
+    <script ></script>
+</body>
+</html>

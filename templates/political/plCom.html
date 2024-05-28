@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title><script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div style="height: 400px;width: 480px;"></div>
+    <script>
+        var plComtitles=[[plComtitles|safe]]
+        var plComSum=[[plComSum|safe]]
+        var colorList=['#A54124','#4A312C','#007E7F','#FAD8C8','#005B77']
+        var dataList=[]
+        for(var i=0;i<5;i++){
+            var obj={
+                name:plComtitles[i],
+                value:plComSum[i],
+                itemStyle:{
+                    color:colorList[i]
+                }
+            }
+            dataList.push(obj)
+        }
+        var myCharts = echarts.init(document.querySelector('.plCom'))
+        var option ={
+            backgroundColor: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#E1C089' // 开始颜色
+                }, {
+                    offset: 1, color: '#B13B2E' // 结束颜色
+                }],
+                global: false // 缺省为 false
+            },
+            legend: {
+                icon: 'circle',
+                data: plComtitles,
+                textStyle: { 
+                    color: '#007E7F',
+                    fontSize: 12 ,
+                    width: 190 ,
+                    overflow:'break',
+                },
+                right: 0,
+                top: 'center',
+                orient: 'vertical',
+                itemGap:15
+            },
+            series: [{
+                // 禁止放大
+                hoverAnimation: false,
+                radius: [0, '50%'],
+                center: ['17%', '50%'],
+                type: 'pie',
+                label: {  normal: { show: false }, emphasis: { show: false } },
+                labelLine: { normal: { show: false }, emphasis: { show: false }},
+                animation: false,
+                tooltip: { show: false },
+                // 阴影颜色
+                itemStyle: { color:'rgba(247,185,113,0.5)'},
+                data: [{ value: 1 }, { value: 1,itemStyle: { color: 'rgba(0,0,0,0)'} }],
+            },{
+                name: "新闻评论排行榜",
+                type: "pie",
+                radius: [ 0, '45%'],
+                avoidLabelOverlap: false,
+                startAngle: 90,
+                endAngle:270,
+                center: [ "17%", "50%" ],
+                roseType: "area",
+                selectedMode: "single",
+                label: {
+                    show:false,
+                },
+                blur:{
+                    itemStyle:{
+                        shadowColor:'rgba(255,255,255,0.8)',
+                        shadowBlur:5
+                    }
+                },
+                data: dataList
+            }]
+
+        }
+        myCharts.setOption(option)
+    </script>
+    
+</body>
+</html>

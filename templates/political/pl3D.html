@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+</head>
+<body>
+    <div class="pl3D"style="height: 400px;width: 350px;"></div>
+    <script>
+        var ptitles=[[ptitles|safe]]
+        var pnum=[[pnum|safe]]
+        pnum= pnum.map(str => parseFloat(str));
+
+        var dataList=[]
+        for(var i=0;i<5;i++){
+            dataList[i]=[ptitles[i],1,pnum[i]]
+        }
+        
+        var myCharts=echarts.init(document.querySelector('.pl3D'))
+        var option = {
+            tooltip:{
+                formatter:function(params){
+                    return params.value[0];
+                }
+            },
+            xAxis3D: {
+                name:'',
+                type: 'category',
+                data: ptitles.slice(0,5),
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    interval:0,
+                    textStyle: {
+                        rotate:15,
+                        fontSize: 16,
+                        color: '#900'
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#0F0',
+                        width: 0
+                    }
+                },
+            },
+            yAxis3D: {
+                name:'',
+                type: 'category',
+                data: [''],
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#0F0',
+                        width: 0
+                    }
+                },
+            },
+            zAxis3D: {
+                name:'',
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#0F0',
+                        width: 0
+                    }
+                },
+            },
+            grid3D: {
+                // width:350,
+                // height:250,
+                boxHeight:80,
+                boxWidth: 180,
+                boxDepth: 20,
+                axisPointer: {
+                    show: false
+                },
+                light: {
+                    main: {
+                        intensity: 1.2
+                    },
+                    ambient: {
+                        intensity: 0.3
+                    }
+                },
+                viewControl: {
+                    // alpha: 5,
+                    // beta: 0,
+                    autoRotate: true,
+                    zoomSensitivity: 0,
+                    autoRotateAfterStill: 15,
+                    distance: 250
+                },
+            },
+            
+            series: [{
+                type: 'bar3D',
+                name: dataList.map(function (item) {
+                    return {
+                        name : item[0]
+                    }
+                }),
+                data: dataList.map(function (item) {
+                    return {
+                        value: [item[0], item[1], item[2]]
+                    }
+                }),
+                itemStyle: {
+                    color: function(params) {
+                        var colorList = [
+                            "#37b70c", "#fae521", "#f29c00", "#dd3f36", "#b3013f", "#a00398", '#E87C25', '#C6E579',
+                        ];
+                        return colorList[params.dataIndex]
+                    }
+                },
+                barSize:[20,20],
+                shading: 'lambert',
+                label: {
+                    show: true,
+                    distance: 10,
+                    textStyle: {
+                        fontSize: 16
+                    }
+                },
+                emphasis: {
+                    label: {
+                        textStyle: {
+                            fontSize: 20,
+                            color: '#900'
+                        }
+                    },
+                    itemStyle: {
+                        color: '#900'
+                    }
+                }
+            }]
+        }
+        myCharts.setOption(option)
+    </script>
+    
+</body>
+</html>
